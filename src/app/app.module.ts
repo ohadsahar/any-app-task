@@ -4,16 +4,24 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TopNavbarComponent } from './core/components/top-navbar/top-navbar.component';
-import { SearchTaskComponent } from './core/components/search-task/search-task.component';
-import {MatInputModule, MatDialogModule, MatButtonModule} from '@angular/material';
+import {MatInputModule, MatDialogModule, MatButtonModule, MatDividerModule,
+  MatTableModule, MatPaginatorModule, MatSnackBarModule, MatCheckboxModule, MatSortModule} from '@angular/material';
 import { RegisterTaskDialogComponent } from './shared/dialogs/register-task-dialog/register-task-dialog.component';
 import { FormsModule } from '@angular/forms';
+import { TaskTableComponent } from './core/components/task-table/task-table.component';
+import { DeleteTaskDialogComponent } from './shared/dialogs/delete-task-dialog/delete-task-dialog.component';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { TasksEffect } from './core/store/effects/tasks-get.effect';
+import { Reducers } from './app.reducer';
+
 @NgModule({
   declarations: [
     AppComponent,
     TopNavbarComponent,
-    SearchTaskComponent,
     RegisterTaskDialogComponent,
+    TaskTableComponent,
+    DeleteTaskDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -22,9 +30,17 @@ import { FormsModule } from '@angular/forms';
     MatInputModule,
     MatDialogModule,
     FormsModule,
-    MatButtonModule
+    MatDividerModule,
+    MatButtonModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSnackBarModule,
+    MatCheckboxModule,
+    MatSortModule,
+    StoreModule.forRoot(Reducers),
+    EffectsModule.forRoot([TasksEffect])
   ],
-  entryComponents: [RegisterTaskDialogComponent],
+  entryComponents: [RegisterTaskDialogComponent, DeleteTaskDialogComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

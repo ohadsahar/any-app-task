@@ -1,0 +1,9 @@
+.mat-dialog-content {
+  overflow-y: hidden;
+  height: 100px;
+}
+
+.mat-stroked-button {
+  margin-left: 5%;
+}
+

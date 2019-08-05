@@ -1,0 +1,27 @@
+.task-table-component {
+  text-align: center;
+}
+
+table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.mat-sort-header-container {
+  align-items: center;
+}
+
+td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
+  text-align: left;
+}
+td {
+  width: 25%;
+}
+
+.no-task-exists {
+  margin-top: 5%;
+}
+
+.delete-section {
+  width: 100%;
+}

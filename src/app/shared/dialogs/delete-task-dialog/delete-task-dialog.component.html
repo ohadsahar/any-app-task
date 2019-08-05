@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Delete validation</h1>
+<div mat-dialog-content>
+  <p>Are you sure you want to delete {{data?.taskToDelete.length}} task? </p>
+  <mat-dialog-actions align="end">
+    <button mat-stroked-button [mat-dialog-close]="true" (click)="deleteSubmitted()" color="primary" type="submit" cdkFocusInitial>Submit task</button>
+    <button mat-stroked-button color="warn" mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>
+</div>

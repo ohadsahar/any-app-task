@@ -1,0 +1,43 @@
+<div class="task-table-component">
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+  </mat-form-field>
+  <section class="delete-section">
+      <button mat-stroked-button (click)="deleteTasksDialog()" *ngIf="!empty">Delete selected tasks</button>
+  </section>
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="id"> ID </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="beforeDelete(row)"></mat-checkbox> {{row?.id}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="title"> Title </th>
+        <td mat-cell *matCellDef="let row" (click)="toggleItem(row)"> {{row?.title}} </td>
+      </ng-container>
+      <ng-container matColumnDef="deadLine">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="deadLine"> Deadline </th>
+        <td mat-cell *matCellDef="let row" (click)="toggleItem(row)"> {{row?.deadLine}} </td>
+      </ng-container>
+      <ng-container matColumnDef="taskContent">
+        <th mat-header-cell *matHeaderCellDef> Task content </th>
+        <td mat-cell *matCellDef="let row" (click)="toggleItem(row)">
+          <p *ngIf="row.isDone">
+            {{row?.content}}
+          </p>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index">
+      </tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  </div>
+  <section *ngIf="taskArray?.length <= 0" class="no-task-exists">
+    <mat-divider></mat-divider>
+    <p>There is no such tasks exits</p>
+    <button mat-raised-button color="primary" (click)="registerNewTask()">Create task </button>
+  </section>
+</div>
