@@ -33,7 +33,7 @@ export class TaskTableComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(public dialog: MatDialog, private shareDataService: ShareDataService, private snackbarService: MatSnackBarService,
-              private taskService: TaskService, private store: Store<fromRoot.State>) {
+    private taskService: TaskService, private store: Store<fromRoot.State>) {
     this.taskArray = [];
     this.deleteTaskArray = [];
     this.sortedData = [];
@@ -82,6 +82,8 @@ export class TaskTableComponent implements OnInit, OnDestroy {
                 }
               });
           }
+        }, (error) => {
+          this.snackbarService.Message(error, ' dismiss');
         });
       }
     });
@@ -108,6 +110,8 @@ export class TaskTableComponent implements OnInit, OnDestroy {
           this.updateTable();
           dataToSubscribe.unsubscribe();
         }
+      }, (error) => {
+        this.snackbarService.Message(error, ' dismiss');
       });
   }
   toggleItem(item: TaskModel) {
