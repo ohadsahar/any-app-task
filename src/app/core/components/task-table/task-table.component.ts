@@ -1,17 +1,16 @@
-import { TaskService } from './../../services/tasks.service';
-import { ShareDataService } from './../../services/share-data.service';
-import { RegisterTaskDialogComponent } from './../../../shared/dialogs/register-task-dialog/register-task-dialog.component';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource, Sort } from '@angular/material';
-import { TaskModel } from './../../../shared/models/task.model';
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { MatSnackBarService } from '../../services/mat-snackbar.service';
-import { DeleteTaskDialogComponent } from 'src/app/shared/dialogs/delete-task-dialog/delete-task-dialog.component';
-import * as fromRoot from '../../../app.reducer';
-import * as tasksActions from '../../store/actions/tasks.actions';
-
 import { Store } from '@ngrx/store';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { DeleteTaskDialogComponent } from 'src/app/shared/dialogs/delete-task-dialog/delete-task-dialog.component';
+import * as fromRoot from '../../../app.reducer';
+import { MatSnackBarService } from '../../services/mat-snackbar.service';
+import * as tasksActions from '../../store/actions/tasks.actions';
+import { RegisterTaskDialogComponent } from './../../../shared/dialogs/register-task-dialog/register-task-dialog.component';
+import { TaskModel } from './../../../shared/models/task.model';
+import { ShareDataService } from './../../services/share-data.service';
+import { TaskService } from './../../services/tasks.service';
 
 @Component({
   selector: 'app-task-table',
@@ -34,7 +33,7 @@ export class TaskTableComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(public dialog: MatDialog, private shareDataService: ShareDataService, private snackbarService: MatSnackBarService,
-    private taskService: TaskService, private store: Store<fromRoot.State>) {
+              private taskService: TaskService, private store: Store<fromRoot.State>) {
     this.taskArray = [];
     this.deleteTaskArray = [];
     this.sortedData = [];
@@ -118,6 +117,8 @@ export class TaskTableComponent implements OnInit, OnDestroy {
       this.displayedColumns = ['id', 'title', 'deadLine'];
     }
     item.isDone = !item.isDone;
+    this.deleteTaskArray = [];
+    this.empty = true;
   }
   beforeDelete(row: TaskModel) {
     const index = this.deleteTaskArray.findIndex(task => task.id === row.id);

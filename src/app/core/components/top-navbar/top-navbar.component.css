@@ -1,7 +1,12 @@
 .bg-light {
   font-weight: bold;
+  background-color: black !important;
 }
 
 .nav-link {
   cursor: pointer;
+}
+
+.navbar-light .navbar-brand {
+  color: white;
 }

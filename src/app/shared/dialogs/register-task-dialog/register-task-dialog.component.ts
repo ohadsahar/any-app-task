@@ -12,7 +12,8 @@ import * as generateId from 'shortid';
 })
 export class RegisterTaskDialogComponent {
   date: Date;
-  constructor(private shareDataService: ShareDataService) {}
+  constructor(private shareDataService: ShareDataService) {
+   }
   submitRegisterTask(form: NgForm) {
     if (form.invalid) {
       return;
@@ -28,9 +29,15 @@ export class RegisterTaskDialogComponent {
     }
   }
   validateTaskRegister(data: any) {
-    if ( (data.title.length >= 3 && data.title.length <= 15) && data.maxDays >= 1 && data.maxDays <= 100 ) {
+    if ((data.title.length >= 3 && data.title.length <= 15) && data.maxDays >= 1 && data.maxDays <= 100) {
       return true;
     }
     return false;
+  }
+
+  validateNumber($event) {
+    if ($event.target.value < 1 || $event.target.value > 101) {
+      $event.target.value = '';
+    }
   }
 }
