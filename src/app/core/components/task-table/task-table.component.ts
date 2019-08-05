@@ -106,7 +106,6 @@ export class TaskTableComponent implements OnInit, OnDestroy {
           this.snackbarService.Message('Task successfully added', 'Dismiss');
           this.updateTable();
           dataToSubscribe.unsubscribe();
-
         }
       });
   }
