@@ -3,7 +3,7 @@
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
   </mat-form-field>
   <section class="delete-section">
-      <button mat-stroked-button (click)="deleteTasksDialog()" *ngIf="!empty">Delete selected tasks</button>
+      <button mat-raised-button color="primary" (click)="deleteTasksDialog()" [disabled]="empty">Delete selected tasks</button>
   </section>
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>

@@ -26,12 +26,13 @@ export class GetAllTasksFailed implements Action {
 
 export class CreateTask implements Action {
   readonly type = CREATE_TASKS;
-  constructor(public payload: any) {}
+  constructor(public payload: any) { }
 }
 
 export class CreateTaskSuccess implements Action {
   readonly type = CREATE_TASKS_SUCCESS;
-  constructor(public payload: any) { }
+  constructor(public payload: any) {
+  }
 }
 
 export class CreateTaskFailed implements Action {

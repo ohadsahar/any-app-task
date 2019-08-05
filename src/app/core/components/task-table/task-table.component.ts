@@ -65,11 +65,12 @@ export class TaskTableComponent implements OnInit, OnDestroy {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.empty = true;
-      this.deleteTaskArray = [];
+
       if (result) {
         this.shareDataService.newTasks.subscribe(response => {
           if (response) {
+            this.empty = true;
+            this.deleteTaskArray = [];
             this.store.dispatch(new tasksActions.DeleteTasks(response));
             const dataToSubscribe = this.store.select(fromRoot.getTaskCrudData).pipe(takeUntil(this.ngbSubscribe$))
               .subscribe((data) => {
