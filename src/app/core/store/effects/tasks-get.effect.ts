@@ -16,7 +16,7 @@ export class TasksEffect {
   @Effect()
   getAllTasks$ = this.actions$.pipe(ofType(tasksActions.GET_ALL_TASKS), map(action => {
     const allTasks = this.taskService.getTask();
-    return new tasksActions.GetAllTasksSuccess(allTasks.payload);
+    return new tasksActions.GetAllTasksSuccess(allTasks);
   }));
 
 

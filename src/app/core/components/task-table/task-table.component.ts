@@ -34,7 +34,7 @@ export class TaskTableComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(public dialog: MatDialog, private shareDataService: ShareDataService, private snackbarService: MatSnackBarService,
-              private taskService: TaskService, private store: Store<fromRoot.State>) {
+    private taskService: TaskService, private store: Store<fromRoot.State>) {
     this.taskArray = [];
     this.deleteTaskArray = [];
     this.sortedData = [];
@@ -50,7 +50,6 @@ export class TaskTableComponent implements OnInit, OnDestroy {
       .subscribe((response) => {
         if (response.loaded) {
           this.taskArray = response.data;
-          this.taskArray = [];
           this.subscribeForNewTasks();
           this.updateTable();
         }
@@ -61,21 +60,24 @@ export class TaskTableComponent implements OnInit, OnDestroy {
     this.dialog.open(RegisterTaskDialogComponent);
   }
   deleteTasksDialog() {
-
     const dialogRef = this.dialog.open(DeleteTaskDialogComponent, {
       data: {
         taskToDelete: this.deleteTaskArray
       }
     });
     dialogRef.afterClosed().subscribe(result => {
+      this.empty = true;
+      this.deleteTaskArray = [];
       if (result) {
         this.shareDataService.newTasks.subscribe(response => {
-          this.taskArray = response;
-          this.updateTable();
+          if (response) {
+            this.taskArray = response;
+            this.updateTable();
+            this.taskService.saveTask(this.taskArray);
+          }
         });
       }
     });
-
   }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();

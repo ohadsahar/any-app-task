@@ -15,14 +15,9 @@ export class DeleteTaskDialogComponent {
 
   deleteSubmitted() {
     this.taskArray = this.taskService.getTask();
-    // this.taskArray = this.taskArray.filter(task => !this.data.taskToDelete.includes(task));
-    this.taskArray.forEach(task =>  {
-      let index = this.data.taskToDelete.findIndex(taskDelete => taskDelete.id === task.id);
-      if (index >= 0) {
-        this.taskArray.splice(index, 1);
-      }
+    this.data.taskToDelete.forEach(taskDelete => {
+      this.taskArray = this.taskArray.filter(task => task.id !== taskDelete.id);
     });
-    console.log(this.taskArray);
     this.shareDataService.changeNewTasksAfterDelete(this.taskArray);
   }
 
