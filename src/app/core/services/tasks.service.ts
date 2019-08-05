@@ -8,13 +8,8 @@ import { Observable } from 'rxjs';
 export class TaskService {
 
   saveTask(taskArray: TaskModel[]) {
-    localStorage.setItem('tasks', JSON.stringify(taskArray));
+    return localStorage.setItem('tasks', JSON.stringify(taskArray));
   }
-
-  deleteTask(task: TaskModel[]) {
-    localStorage.setItem('tasks', JSON.stringify(task));
-  }
-
   getTask() {
     if (JSON.parse(localStorage.getItem('tasks'))) {
       return JSON.parse(localStorage.getItem('tasks'));

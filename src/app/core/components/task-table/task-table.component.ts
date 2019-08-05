@@ -71,9 +71,16 @@ export class TaskTableComponent implements OnInit, OnDestroy {
       if (result) {
         this.shareDataService.newTasks.subscribe(response => {
           if (response) {
-            this.taskArray = response;
-            this.updateTable();
-            this.taskService.saveTask(this.taskArray);
+            this.store.dispatch(new tasksActions.DeleteTasks(response));
+            const dataToSubscribe = this.store.select(fromRoot.getTaskCrudData).pipe(takeUntil(this.ngbSubscribe$))
+              .subscribe((data) => {
+                if (data.loaded) {
+                  this.taskArray = response;
+                  this.updateTable();
+                  this.taskService.saveTask(this.taskArray);
+                  dataToSubscribe.unsubscribe();
+                }
+              });
           }
         });
       }
@@ -91,17 +98,18 @@ export class TaskTableComponent implements OnInit, OnDestroy {
     this.dataSource.sort = this.sort;
   }
   afterRegisterNewTask(response: TaskModel) {
-    this.taskArray.push(response);
-    this.taskService.saveTask(this.taskArray);
-    this.snackbarService.Message('Task successfully added', 'Dismiss');
-    this.updateTable();
-    // this.store.dispatch(new tasksActions.CreateTask(response));
-    // this.dataToSubscribe = this.store.select(fromRoot.getTaskCrudData).pipe(takeUntil(this.ngbSubscribe$))
-    //   .subscribe((data) => {
-    //     if (data.loaded) {
+    this.store.dispatch(new tasksActions.CreateTask(response));
+    const dataToSubscribe = this.store.select(fromRoot.getTaskCrudData).pipe(takeUntil(this.ngbSubscribe$))
+      .subscribe((data) => {
+        if (data.loaded) {
+          this.taskArray.push(response);
+          this.taskService.saveTask(this.taskArray);
+          this.snackbarService.Message('Task successfully added', 'Dismiss');
+          this.updateTable();
+          dataToSubscribe.unsubscribe();
 
-    //   }
-    // });
+        }
+      });
   }
   toggleItem(item: TaskModel) {
     if (!item.isDone) {
