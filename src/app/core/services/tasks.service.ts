@@ -7,7 +7,8 @@ import { Injectable } from "@angular/core";
 export class TaskService {
 
   saveTask(taskArray: TaskModel[]) {
-    return localStorage.setItem('tasks', JSON.stringify(taskArray));
+    localStorage.setItem('tasks', JSON.stringify(taskArray));
+    return taskArray;
 
   }
   getTask() {

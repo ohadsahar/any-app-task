@@ -65,7 +65,6 @@ export class TaskTableComponent implements OnInit, OnDestroy {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-
       if (result) {
         this.shareDataService.newTasks.subscribe(response => {
           if (response) {
@@ -75,7 +74,7 @@ export class TaskTableComponent implements OnInit, OnDestroy {
             const dataToSubscribe = this.store.select(fromRoot.getTaskCrudData).pipe(takeUntil(this.ngbSubscribe$))
               .subscribe((data) => {
                 if (data.loaded) {
-                  this.taskArray = response;
+                  this.taskArray = data.data;
                   this.updateTable();
                   this.taskService.saveTask(this.taskArray);
                   dataToSubscribe.unsubscribe();
@@ -104,7 +103,7 @@ export class TaskTableComponent implements OnInit, OnDestroy {
     const dataToSubscribe = this.store.select(fromRoot.getTaskCrudData).pipe(takeUntil(this.ngbSubscribe$))
       .subscribe((data) => {
         if (data.loaded) {
-          this.taskArray.push(response);
+          this.taskArray.push(data.data);
           this.taskService.saveTask(this.taskArray);
           this.snackbarService.Message('Task successfully added', 'Dismiss');
           this.updateTable();
@@ -174,5 +173,6 @@ export class TaskTableComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.dataToSubscribe.unsubscribe();
+    this.ngbSubscribe$.unsubscribe();
   }
 }

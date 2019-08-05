@@ -26,7 +26,7 @@ export function tasksCrudGetReducer(state = initialState, action: tasksActions.A
         ...state,
         loading: false,
         loaded: true,
-        data: action.payload
+        data: action.payload.payload
       };
     case tasksActions.CREATE_TASKS_FAILED:
       return {
@@ -47,7 +47,7 @@ export function tasksCrudGetReducer(state = initialState, action: tasksActions.A
         ...state,
         loading: false,
         loaded: true,
-        data: action.payload
+        data: action.payload.payload,
       };
     case tasksActions.DELETE_TASKS_FAILED:
       return {
