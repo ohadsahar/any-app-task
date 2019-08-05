@@ -1,0 +1,11 @@
+.full-width {
+  width: 100%;
+}
+
+.mat-dialog-content {
+  overflow-y: hidden;
+}
+
+.mat-stroked-button {
+  margin-left: 5%;
+}
